@@ -1,0 +1,81 @@
+QPushButton {
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    color: black;
+    background-color: #3498db;
+    border: none;
+}
+
+QPushButton#btnCaptureImage {
+    background-color: #A8D8E3;
+}
+QPushButton#btnCaptureImage:hover {
+    background-color: #DBEFF6;
+}
+
+QPushButton#btnCaptureImage:pressed {
+    background-color: #9CC3DF;
+}
+
+
+QPushButton#btnStartGrasp {
+    background-color: #99C49C;
+}
+QPushButton#btnStartGrasp:hover {
+    background-color: #D2F1DE;
+}
+QPushButton#btnStartGrasp:pressed {
+    background-color: #516850;
+}
+
+
+QPushButton#btnPause {
+    background-color: #F4D48D;
+}
+QPushButton#btnPause:hover {
+    background-color: #F2E0C4;
+}
+QPushButton#btnPause:pressed {
+    background-color: #F1C64E;
+}
+
+
+QPushButton#btnReset {
+    background-color: #84ABD1;
+}
+QPushButton#btnReset:hover {
+    background-color: #9EBEDC;
+}
+QPushButton#btnReset:pressed {
+    background-color: #1B61A7;
+}
+
+
+QPushButton#btnEmergencyStop {
+    background-color: #EB2129;
+}
+QPushButton#btnEmergencyStop:hover {
+    background-color: #BD6C73;
+}
+QPushButton#btnEmergencyStop:pressed {
+    background-color: #DB5376;
+}
+
+
+QGroupBox {
+    font: bold 17px "Segoe UI";
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    margin-top: 15px;
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    padding: 0 6px;
+    background-color: #f8f9fa;
+    color: #2c3e50;
+}
