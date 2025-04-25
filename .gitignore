@@ -1,4 +1,6 @@
 *.png
 *.jpg
+.idea/
+
 /cmake-build-debug/
 /pytorch/
