@@ -1,31 +1,48 @@
-//
-// Created by yhlever on 25-3-5.
-//
-
-#ifndef ROBOT_GRASP_LOGINDIALOG_HPP
-#define ROBOT_GRASP_LOGINDIALOG_HPP
+#ifndef LOGINDIALOG_HPP
+#define LOGINDIALOG_HPP
 
 #include <QDialog>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QLabel>
 
-class LoginDialog : public QDialog {
-    Q_OBJECT
+QT_BEGIN_NAMESPACE
+class QLabel;
+class QLineEdit;
+class QPushButton;
+class QCheckBox;
+class QVBoxLayout;
+class QHBoxLayout;
+QT_END_NAMESPACE
+
+class LoginDialog : public QDialog
+{
+Q_OBJECT
+
 public:
-    explicit LoginDialog(QWidget* parent = nullptr);
-    QString username() const;
+
+    explicit LoginDialog(QWidget *parent = nullptr);
+
+    ~LoginDialog() override = default;
 
 private Q_SLOTS:
-    void attemptLogin();
+
+            void onLoginClicked();
 
 private:
-    QLineEdit* m_usernameLineEdit;
-    QLineEdit* m_passwordLineEdit;
-    QPushButton* m_loginButton;
-    QLabel* m_statusLabel;
+    QLabel *leftImageLabel{};
+    QLabel *welcomeLabel{};
+    QLabel *promptLabel{};
+    QLineEdit *usernameLineEdit{}; // 用户名输入框
+    QLineEdit *passwordLineEdit{}; // 密码输入框
+    QCheckBox *rememberCheckBox{}; // "记住密码" 复选框
+    QPushButton *loginButton{};    // 登录按钮
+
+    QHBoxLayout *mainLayout{};
+    QVBoxLayout *rightLayout{};
+
+    const QString correctUsername = "admin";
+    const QString correctPassword = "123456";
+
+
+    void setupUi();
 };
 
-
-
-#endif //ROBOT_GRASP_LOGINDIALOG_HPP
+#endif // LOGINDIALOG_HPP

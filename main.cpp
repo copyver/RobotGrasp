@@ -22,19 +22,19 @@ int main(int argc, char *argv[])
     qRegisterMetaType<std::shared_ptr<PercipioCamera>>("std::shared_ptr<PercipioCamera>");
 
     // 先显示登录对话框
-//    LoginDialog loginDialog;
-//    if (loginDialog.exec() == QDialog::Accepted) {
-        // 登录成功，进入主界面
-//        MainWindow mainWindow;
-//        mainWindow.setWindowTitle("机器人抓取系统");
-//        mainWindow.resize(800, 600);
-//        mainWindow.show();
-//        return app.exec();
-//    }
-    MainWindow mainWindow;
-    mainWindow.setWindowTitle("机器人抓取系统");
-    mainWindow.resize(800, 600);
-    mainWindow.show();
-    return app.exec();
+    LoginDialog loginDialog;
+    if (loginDialog.exec() == QDialog::Accepted) {
+         //登录成功，进入主界面
+        MainWindow mainWindow;
+        mainWindow.setWindowTitle("机器人抓取系统");
+        mainWindow.resize(800, 600);
+        mainWindow.show();
+        return app.exec();
+    }
+//    MainWindow mainWindow;
+//    mainWindow.setWindowTitle("机器人抓取系统");
+//    mainWindow.resize(800, 600);
+//    mainWindow.show();
+//    return app.exec();
 
 }
