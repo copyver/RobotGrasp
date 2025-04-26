@@ -301,7 +301,7 @@ void MainWindow::onConnectCameraToggled(bool checked) {
 
 void MainWindow::onConnectRobotToggled(bool checked) {
     if (!robotWorker) {
-        appendLog("RobotWorker 未初始化 (应在构造函数中完成)", true);
+        appendLog("RobotWorker 未初始化", true);
         btnConnectRobot->setChecked(false); // Revert toggle state
         return;
     }

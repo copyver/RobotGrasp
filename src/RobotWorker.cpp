@@ -205,8 +205,6 @@ void RobotWorker::robotMotionLoop() {
         {
             std::unique_lock<std::mutex> lk(m_mtx);
             m_cv.wait(lk, [this] {
-                // 1. Stop is requested (!m_isRunning)
-                // 2. A new move is requested (m_needMoveRobot)
                 return !m_isRunning.load() || m_stopRequested.load() || m_needMoveRobot;
             });
 
@@ -262,7 +260,7 @@ void RobotWorker::robotMotionLoop() {
                 double rx = localData.PoseBHo[3];
                 double ry = localData.PoseBHo[4];
                 double rz = localData.PoseBHo[5];
-                // Intermediate lift
+
                 dobot->moveRobotCustom(
                         std::vector<double>{x, y, z + RobotConstants::MODE11_INTERMEDIATE_OFFSET_Z, rx, ry, rz});
                 CHECK_STOP_BREAK
@@ -270,16 +268,22 @@ void RobotWorker::robotMotionLoop() {
                 dobot->moveRobotCustom(std::vector<double>{x, y - RobotConstants::MODE11_TEST_OFFSET_Y,
                                                            z + RobotConstants::MODE11_INTERMEDIATE_OFFSET_Z, rx, ry,
                                                            rz});
-                CHECK_STOP_BREAK
-                dobot->moveRobotCustom(std::vector<double>{x, y + RobotConstants::MODE11_TEST_OFFSET_Y,
-                                                           z + RobotConstants::MODE11_INTERMEDIATE_OFFSET_Z, rx, ry,
+
+                dobot->moveRobotCustom(std::vector<double>{x, y - RobotConstants::MODE11_TEST_OFFSET_Y,
+                                                           z - RobotConstants::MODE11_INTERMEDIATE_OFFSET_Z, rx, ry,
                                                            rz});
                 CHECK_STOP_BREAK
-                dobot->moveRobotCustom(std::vector<double>{x, y, z + RobotConstants::MODE11_TEST_OFFSET_Z, rx, ry, rz});
+                dobot->moveRobotCustom(std::vector<double>{x, y + RobotConstants::MODE11_TEST_OFFSET_Y,
+                                                           z - RobotConstants::MODE11_INTERMEDIATE_OFFSET_Z, rx, ry,
+                                                           rz});
+                CHECK_STOP_BREAK
+                dobot->moveRobotCustom(std::vector<double>{x, y + RobotConstants::MODE11_TEST_OFFSET_Y, RobotConstants::MODE11_TEST_Z, rx, ry, rz});
                 CHECK_STOP_BREAK
 
                 dobot->moveRobotOrigin();
                 CHECK_STOP_BREAK
+
+                dobot->setEffectorRegs(dobot->index, RobotConstants::EFFECTOR_REGISTER_INDEX, effector_amp);
 
                 dobot->isRobotMode11 = false;
 
@@ -353,7 +357,7 @@ void RobotWorker::robotMotionLoop() {
     std::cout << "[RobotMotionLoop] Exiting...\n";
     {
         std::lock_guard<std::mutex> lk_done(m_mtx);
-        m_robotMotionDone = true; // Ensure flag is true on exit
+        m_robotMotionDone = true;
     }
     m_cv.notify_one();
 }
@@ -366,7 +370,7 @@ void RobotWorker::startGrasp() {
     }
 
     if (!checkGraspPrerequisites()) {
-        Q_EMIT signalFinished(); // Signal finished as we cannot start
+        Q_EMIT signalFinished();
         return;
     }
 

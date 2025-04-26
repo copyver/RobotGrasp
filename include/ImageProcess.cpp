@@ -876,9 +876,9 @@ Eigen::Matrix4d GrabData::computeNewcHo(const Eigen::Matrix4d &cHo) {
 
 int GrabData::chooseEffectorAmp(std::string &className) {
     if (className == "handle") {
-        return 45;
+        return 35;
     } else if (className == "socket01") {
-        return 90;
+        return 80;
     } else {
         return 100;
     }

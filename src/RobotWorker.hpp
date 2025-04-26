@@ -54,8 +54,8 @@ namespace RobotConstants {
     constexpr int MAX_RECOGNITION_FAILURES = 3;
 
     // Mode 11 parameters
-    constexpr double MODE11_TEST_OFFSET_Y = 50.0;
-    constexpr double MODE11_TEST_OFFSET_Z = 50.0;
+    constexpr double MODE11_TEST_OFFSET_Y = 80.0;
+    constexpr double MODE11_TEST_Z = 100.0;
     constexpr double MODE11_INTERMEDIATE_OFFSET_Z = 5.0;
 }
 

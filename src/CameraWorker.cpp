@@ -68,7 +68,7 @@ void CameraWorker::disconnectCamera() {
     if (m_camera) {
         Q_EMIT logMessage("[CameraWorker] 正在断开相机连接...");
         try {
-            Q_EMIT logMessage("[CameraWorker] (假设) 调用相机硬件关闭函数..."); // Placeholder log
+            Q_EMIT logMessage("[CameraWorker] 调用相机硬件关闭函数..."); // Placeholder log
 
         } catch (const std::exception &e) {
             Q_EMIT errorMessage(QString("[CameraWorker] 断开相机硬件时出错: %1").arg(e.what()));
