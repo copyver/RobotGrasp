@@ -55,7 +55,9 @@ namespace RobotConstants {
 
     // Mode 11 parameters
     constexpr double MODE11_TEST_OFFSET_Y = 80.0;
-    constexpr double MODE11_TEST_Z = 100.0;
+    constexpr double MODE11_TEST_MIN_Y = -160;
+    constexpr double MODE11_TEST_MAX_Y = 340;
+    constexpr double MODE11_TEST_Z = 150.0;
     constexpr double MODE11_INTERMEDIATE_OFFSET_Z = 5.0;
 }
 
