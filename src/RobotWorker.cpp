@@ -260,8 +260,12 @@ void RobotWorker::robotMotionLoop() {
                 double rx = localData.PoseBHo[3];
                 double ry = localData.PoseBHo[4];
                 double rz = localData.PoseBHo[5];
-                double y_test_l = (y-RobotConstants::MODE11_TEST_OFFSET_Y) < -160  ? -160 : RobotConstants::MODE11_TEST_MIN_Y;
-                double y_test_r = (y+RobotConstants::MODE11_TEST_OFFSET_Y) > 340  ? 340 : RobotConstants::MODE11_TEST_MAX_Y;
+                double y_test_l =
+                        (y - RobotConstants::MODE11_TEST_OFFSET_Y) < RobotConstants::MODE11_TEST_MIN_Y ?
+                        RobotConstants::MODE11_TEST_MIN_Y : (y - RobotConstants::MODE11_TEST_OFFSET_Y);
+                double y_test_r =
+                        (y + RobotConstants::MODE11_TEST_OFFSET_Y) > RobotConstants::MODE11_TEST_MAX_Y ?
+                        RobotConstants::MODE11_TEST_MAX_Y : (y + RobotConstants::MODE11_TEST_OFFSET_Y);
 
                 dobot->moveRobotCustom(
                         std::vector<double>{x, y, z + RobotConstants::MODE11_INTERMEDIATE_OFFSET_Z, rx, ry, rz});

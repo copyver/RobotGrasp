@@ -245,7 +245,7 @@ void DobotTcp::setInitState() {
     getCurrentCommandID(m_Dashboard.ClearError(), cID);
     getCurrentCommandID(m_Dashboard.PowerOn(), cID);
     getCurrentCommandID(m_Dashboard.EnableRobot(), cID);
-    getCurrentCommandID(m_Dashboard.SpeedFactor(15), cID);
+    getCurrentCommandID(m_Dashboard.SpeedFactor(20), cID);
     getCurrentCommandID(m_Dashboard.CP(10), cID);
     getCurrentCommandID(m_Dashboard.User(0), cID);
     getCurrentCommandID(m_Dashboard.Tool(3), cID);
