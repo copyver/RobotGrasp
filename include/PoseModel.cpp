@@ -80,14 +80,14 @@ ModelPose::~ModelPose() {
 
 PyObject *ModelPose::loadModel() {
     PyGILState_STATE gstate = PyGILState_Ensure();
-    PyObject *pName = PyUnicode_FromString("inference");
+    PyObject *pName = PyUnicode_FromString("pose_estimation");
     PyObject *pModule = PyImport_Import(pName); // 加载.py文件
     Py_DECREF(pName);
     if (pModule == nullptr) {
         PyErr_Print();
         std::cerr << "PyImport_ImportModule Fail!" << std::endl;
     }
-    PyObject *pFunc = PyObject_GetAttrString(pModule, "predict"); // 调用的函数名
+    PyObject *pFunc = PyObject_GetAttrString(pModule, "predict_pose"); // 调用的函数名
     PyGILState_Release(gstate);
     return pFunc;
 }

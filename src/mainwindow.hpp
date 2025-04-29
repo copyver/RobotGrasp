@@ -62,7 +62,7 @@ private:
     QLabel *labelImage{};
     QTextEdit *textLog{};
 
-    // --- 业务对象 ---
+    // 对象
     std::shared_ptr<ModelPose> poseModel;
     std::shared_ptr<GrabData> grabData;
     PyObject *pFunc{};

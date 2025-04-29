@@ -44,22 +44,22 @@ void LoginDialog::setupUi() {
     }
 
     //  右侧界面
-    welcomeLabel = new QLabel("<b>Welcome back!</b>", this);
-    promptLabel = new QLabel("Please enter your details", this);
+    welcomeLabel = new QLabel("<b>欢迎回来!</b>", this);
+    promptLabel = new QLabel("请输入你的账号和密码以登录。", this);
 
     usernameLineEdit = new QLineEdit(this);
-    usernameLineEdit->setPlaceholderText("Username");
+    usernameLineEdit->setPlaceholderText("用户名");
     usernameLineEdit->setText(correctUsername);
 
     passwordLineEdit = new QLineEdit(this);
-    passwordLineEdit->setPlaceholderText("Password");
+    passwordLineEdit->setPlaceholderText("密码");
     passwordLineEdit->setEchoMode(QLineEdit::Password);
     passwordLineEdit->setText(correctPassword);
 
-    rememberCheckBox = new QCheckBox("Remember Me", this);
+    rememberCheckBox = new QCheckBox("记住我", this);
     rememberCheckBox->setChecked(true);
 
-    loginButton = new QPushButton("Log In", this);
+    loginButton = new QPushButton("登录", this);
     loginButton->setCursor(Qt::PointingHandCursor);
     loginButton->setDefault(true);
     loginButton->setObjectName("loginButton");
@@ -210,10 +210,10 @@ void LoginDialog::onLoginClicked() {
     QString password = passwordLineEdit->text();
 
     if (username == correctUsername && password == correctPassword) {
-        QMessageBox::information(this, "Login Successful", "Welcome back, " + username + "!");
+        QMessageBox::information(this, "登录成功", "欢迎回来, " + username + "!");
         accept();
     } else {
-        QMessageBox::warning(this, "Login Failed", "Incorrect username or password. Please try again.");
+        QMessageBox::warning(this, "登录失败", "用户名或密码错误，请重试.");
         passwordLineEdit->clear();
         passwordLineEdit->setFocus();
     }
