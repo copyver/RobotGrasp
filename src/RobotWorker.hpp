@@ -34,13 +34,14 @@ namespace RobotConstants {
 
     // Robot Parameters
     constexpr int EFFECTOR_REGISTER_INDEX = 40000;
-    constexpr int EFFECTOR_ON_DURATION_MS = 500;
+    constexpr int EFFECTOR_ON_DURATION_MS = 100;
     constexpr int EFFECTOR_OFF_DURATION_MS = 1000;
 
     // Grasping Parameters
     constexpr double APPROACH_Z_OFFSET = 20.0;
     constexpr double LIFT_Z_OFFSET = 20.0;
-    constexpr int GRASP_SPEED = 20;
+    constexpr int GRASP_SPEED_DOWN = 20;
+    constexpr int GRASP_SPEED_UP = 40;
     constexpr double PRE_GRASP_Y_OFFSET = -28.0;
     constexpr double RZ_FLIP_THRESHOLD = -120.0;
     constexpr double RZ_FLIP_ADJUSTMENT = 180.0;

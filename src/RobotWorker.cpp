@@ -244,7 +244,7 @@ void RobotWorker::robotMotionLoop() {
             dobot->setEffectorRegs(dobot->index, RobotConstants::EFFECTOR_REGISTER_INDEX, effector_amp,
                                    RobotConstants::EFFECTOR_ON_DURATION_MS);
 
-            dobot->moveRobotCustomOffsetZ(localData.PoseBHo, -effector_z, RobotConstants::GRASP_SPEED);
+            dobot->moveRobotCustomOffsetZ(localData.PoseBHo, -effector_z, RobotConstants::GRASP_SPEED_DOWN);
             CHECK_STOP_BREAK
 
             std::this_thread::sleep_for(RobotConstants::GRASP_EFFECTOR_DELAY);
@@ -307,7 +307,7 @@ void RobotWorker::robotMotionLoop() {
             }
 
             dobot->moveRobotCustomOffsetZ(localData.PoseBHo, effector_z + RobotConstants::LIFT_Z_OFFSET,
-                                          RobotConstants::GRASP_SPEED);
+                                          RobotConstants::GRASP_SPEED_UP);
             CHECK_STOP_BREAK
 
             dobot->moveRobotSecond();

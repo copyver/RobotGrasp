@@ -878,7 +878,7 @@ int GrabData::chooseEffectorAmp(std::string &className) {
     if (className == "handle") {
         return 35;
     } else if (className == "socket01") {
-        return 80;
+        return 90;
     } else {
         return 100;
     }
