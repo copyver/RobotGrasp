@@ -60,11 +60,9 @@ void SwitchButton::paintEvent(QPaintEvent *) {
 
     QRect textRect;
     if (checked) {
-        // 滑块在右边，文字放左边
         textRect = QRect(4, 0, width() - height(), height());
         painter.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text);
     } else {
-        // 滑块在左边，文字放右边
         textRect = QRect(height(), 0, width() - height() - 4, height());
         painter.drawText(textRect, Qt::AlignVCenter | Qt::AlignRight, text);
     }

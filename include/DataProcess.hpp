@@ -50,14 +50,12 @@ namespace DataUtils {
             throw std::runtime_error("Error reading symbolic link /proc/self/exe");
         }
 
-        // 获取当前可执行文件所在目录
         std::string exePath(path, count);
         std::string::size_type pos = exePath.find_last_of("/");
         if (pos == std::string::npos) {
             throw std::runtime_error("Unable to determine executable folder");
         }
 
-        // 截取上级目录
         std::string currentFolder = exePath.substr(0, pos);
         pos = currentFolder.find_last_of("/");
         if (pos == std::string::npos) {
@@ -70,7 +68,7 @@ namespace DataUtils {
     inline bool clearFolder(const std::string &folderPath) {
         DIR *dir = opendir(folderPath.c_str());
         if (dir == nullptr) {
-            return false;  // 无法打开文件夹
+            return false;
         }
 
         struct dirent *entry;
@@ -83,11 +81,9 @@ namespace DataUtils {
                 struct stat fileInfo{};
                 if (stat(filePath.c_str(), &fileInfo) == 0) {
                     if (S_ISDIR(fileInfo.st_mode)) {
-                        // 如果是文件夹，可以递归删除文件夹及其内容
                         clearFolder(filePath);
                         rmdir(filePath.c_str());
                     } else {
-                        // 如果是文件，删除文件
                         remove(filePath.c_str());
                     }
                 }
@@ -111,7 +107,6 @@ namespace DataUtils {
             fs::create_directories(folderPath);
         }
 
-        // 统计文件夹中已有的 PNG 图片数量
         int imageCount = 0;
         for (const auto &entry: fs::directory_iterator(folderPath)) {
             if (entry.path().extension() == ".png") {
@@ -119,7 +114,6 @@ namespace DataUtils {
             }
         }
 
-        // 生成新的文件名，格式为 image_000001.png
         std::ostringstream filenameStream;
         filenameStream << "image_" << std::setw(6) << std::setfill('0') << imageCount << ".png";
         std::string newImageName = filenameStream.str();

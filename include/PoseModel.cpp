@@ -37,8 +37,6 @@ ModelPose::ModelPose() {
 
     Py_Initialize();
 
-
-    // 获取当前可执行文件的路径
     char exePath[PATH_MAX];
     ssize_t count = readlink("/proc/self/exe", exePath, PATH_MAX);
     if (count == -1) {
@@ -47,22 +45,19 @@ ModelPose::ModelPose() {
     }
     exePath[count] = '\0';
 
-    // 获取当前可执行文件所在目录
     char *lastSlash = strrchr(exePath, '/');
     if (lastSlash) *lastSlash = 0; // 删除最后一个斜杠及其之后的内容，以得到目录
 
-    // 计算上级目录
     lastSlash = strrchr(exePath, '/');
     if (lastSlash) *lastSlash = 0; // 再次执行以得到上级目录
 
-    //  'python' 目录的路径
+    //  'python'
     std::string pythonDir = std::string(exePath) + "/pytorch";
 
     std::string pythonCommand = "import sys; sys.path.append('";
     pythonCommand += pythonDir;
     pythonCommand += "')";
 
-    // 执行 Python 命令
     PyRun_SimpleString(pythonCommand.c_str());
     init_numpy(); // 初始化 numpy array API
 
@@ -108,13 +103,12 @@ bool ModelPose::runPoseEstimation(PyObject *pFunc, cv::Mat colorImage, cv::Mat d
     PyObject *pResult = PyObject_CallObject(pFunc, pArgs); // 调用 Python 函数
     Py_XDECREF(pArgs);
 
-    // 解析结果
     if (!parseModelPoseResults(pResult)) {
-        Py_XDECREF(pResult); // 释放结果对象
+        Py_XDECREF(pResult);
         return false;
     }
 
-    Py_XDECREF(pResult); // 释放结果对象
+    Py_XDECREF(pResult);
     PyGILState_Release(gstate);
     return true;
 }
@@ -125,7 +119,6 @@ PyObject *ModelPose::matToNumpy(const cv::Mat &mat) {
         return nullptr;
     }
 
-    // 检查通道数
     int typenum;
     switch (mat.type()) {
         case CV_8UC1:
@@ -164,7 +157,7 @@ PyObject *ModelPose::matToNumpy(const cv::Mat &mat) {
 
 bool ModelPose::parseModelPoseResults(PyObject *pResult) {
     if (!pResult || !PyDict_Check(pResult)) {
-        return false;  // 如果 pResult 为空或不是字典，返回 false
+        return false;
     }
 
     PyObject *pKey, *pValue;
@@ -205,10 +198,9 @@ bool ModelPose::parseModelPoseResults(PyObject *pResult) {
                 }
             }
         }
-            // 对非 numpy 数组的情况处理
         else {
             if (strcmp(keyStr, "cls_names") == 0) {
-                // cls_names 应该是列表，列表中存放字符串
+                // cls_names 列表中存放字符串
                 if (PyList_Check(pValue)) {
                     Py_ssize_t n = PyList_Size(pValue);
                     result.classNames.resize(n);
@@ -295,10 +287,8 @@ bool ModelPose::parseModelPoseResults(PyObject *pResult) {
 
     for (size_t i = 0; i < result.predRs.size(); i++)
     {
-        // 创建一个 4×4 单位矩阵
         Eigen::Matrix4d cHo = Eigen::Matrix4d::Identity();
 
-        // 将 3×3 旋转写入矩阵的左上角
         cHo(0,0) = result.predRs[i][0];  // r00
         cHo(0,1) = result.predRs[i][1];  // r01
         cHo(0,2) = result.predRs[i][2];  // r02
@@ -309,24 +299,20 @@ bool ModelPose::parseModelPoseResults(PyObject *pResult) {
         cHo(2,1) = result.predRs[i][7];  // r21
         cHo(2,2) = result.predRs[i][8];  // r22
 
-        // 将平移写入矩阵的右侧列
         cHo(0,3) = result.predTs[i][0];  // tx
         cHo(1,3) = result.predTs[i][1];  // ty
         cHo(2,3) = result.predTs[i][2];  // tz
 
-        // 将组合后的 4×4 齐次矩阵放入 cHos
         result.cHos.push_back(cHo);
     }
     return true;
 }
 
 
-// 打印 ModelPoseResult 的内容
 void ModelPose::printPoseResult() {
     std::cout << "================= Model Pose Result =================" << std::endl;
 
-    const int colWidth = 12;  // 每列宽度
-    // 打印表头
+    const int colWidth = 12;
     std::cout << std::left
               << std::setw(colWidth) << "cls_name"
               << std::setw(colWidth) << "seg_score"
@@ -334,10 +320,8 @@ void ModelPose::printPoseResult() {
               << std::setw(colWidth) << "add"
               << std::endl;
 
-    // 假设各个向量长度相同
     size_t n = result.classNames.size();
 
-    // 计算各项的平均值
     float avgSeg = 0.f, avgPose = 0.f, avgAdd = 0.f;
     if (n > 0) {
         avgSeg = std::accumulate(result.segScores.begin(), result.segScores.end(), 0.f) / n;
@@ -345,7 +329,6 @@ void ModelPose::printPoseResult() {
         avgAdd = std::accumulate(result.addMetrics.begin(), result.addMetrics.end(), 0.f) / n;
     }
 
-    // 打印平均值
     std::cout << std::left
               << std::setw(colWidth) << "all"
               << std::setw(colWidth) << std::fixed << std::setprecision(2) << avgSeg

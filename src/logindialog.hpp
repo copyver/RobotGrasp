@@ -32,7 +32,7 @@ private:
     QLabel *promptLabel{};
     QLineEdit *usernameLineEdit{}; // 用户名输入框
     QLineEdit *passwordLineEdit{}; // 密码输入框
-    QCheckBox *rememberCheckBox{}; // "记住密码" 复选框
+    QCheckBox *rememberCheckBox{}; // "记住密码"
     QPushButton *loginButton{};    // 登录按钮
 
     QHBoxLayout *mainLayout{};

@@ -21,7 +21,7 @@ RobotWorker::RobotWorker(std::shared_ptr<PercipioCamera> cam,
           m_poseModel(std::move(poseModel)),
           m_pFunc(pFunc),
           m_grabData(std::move(grabData)),
-          m_dobot(nullptr), // Initialize shared_ptr to null
+          m_dobot(nullptr),
           m_isRunning(false),
           m_isPaused(false),
           m_needMoveRobot(false),
@@ -32,7 +32,7 @@ RobotWorker::~RobotWorker() {
 }
 
 void RobotWorker::connectRobot() {
-    if (m_dobot) { // 检查是否已连接
+    if (m_dobot) {
         Q_EMIT signalLog("机器人已经连接");
         return;
     }
@@ -45,7 +45,7 @@ void RobotWorker::connectRobot() {
         if (m_dobot) {
             m_dobot->setInitState();
             m_dobot->setModbusStation();
-            m_dobot->moveRobotOrigin(); // Move to origin on connect
+            m_dobot->moveRobotOrigin();
             Q_EMIT signalLog("机器人连接成功");
             Q_EMIT signalRobotConnected();
         } else {
@@ -72,7 +72,7 @@ void RobotWorker::disconnectRobot() {
 
 void RobotWorker::setCamera(std::shared_ptr<PercipioCamera> cam) {
     Q_EMIT signalLog("接收到相机对象...");
-    m_camera = std::move(cam); // Update the internal shared_ptr
+    m_camera = std::move(cam);
     if (!m_camera) {
         Q_EMIT signalError("接收到的相机对象为空");
     } else {
